@@ -1,5 +1,6 @@
 const pool = require('../config/db');
 
+
 exports.createProduct = async (req, res) => {
   try {
     const { name, price, stock_qty } = req.body;
@@ -8,9 +9,11 @@ exports.createProduct = async (req, res) => {
       return res.status(400).json({ message: 'Name and price required' });
     }
 
+    const imageUrl = req.file ? `/uploads/${req.file.filename}` : null;
+
     await pool.promise().query(
-      'INSERT INTO products (name, price, stock_qty) VALUES (?, ?, ?)',
-      [name, price, stock_qty || 0]
+      'INSERT INTO products (name, price, stock_qty, image_url) VALUES (?, ?, ?, ?)',
+      [name, price, stock_qty || 0, imageUrl]
     );
 
     res.status(201).json({ message: 'Product added' });
