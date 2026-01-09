@@ -33,6 +33,14 @@ app.get('/protected', authMiddleware, (req, res) => {
   });
 });
 
+const productRoutes = require('./routes/product.routes');
+app.use('/api/products', productRoutes);
+
+const salesRoutes = require('./routes/sales.routes');
+app.use('/api/sales', salesRoutes);
+
+const reportRoutes = require('./routes/report.routes');
+app.use('/api/reports', reportRoutes);
 
 
 module.exports = app;
